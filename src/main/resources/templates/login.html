@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login Page</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<!-- This thing is 100% prototype.  It needs lots of cleanup to be a real page -->
+	<p>LOGIN HERE</p>
+	<form action="/" id="loginForm">
+		User Name <input type="text" name="username"> </input> Password <input
+			type="text" name="pass"> </input> <input type="submit" />
+	</form>
+
+	<script>
+  // Attach a submit handler to the form
+  $("#loginForm").submit(function( event ) {
+
+    // Stop form from submitting normally
+    event.preventDefault();
+    
+    var sendInfo = {
+            username: document.getElementById("loginForm").username.value,
+            password: document.getElementById("loginForm").pass.value
+        };
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/users/login",
+        contentType: "application/json; charset=utf-8",
+    	data: JSON.stringify(sendInfo),
+        success: function (data, status, jqXHR) {
+        	alert("Success.  You are logged in.");
+        },
+        error: function (jqXHR, status) {
+        	alert("Incorrect UserName Password Combination");
+        }     
+    });     
+  });
+  </script>
+
+
+	<div>
+
+		<p>CREATE USER HERE</p>
+		<form action="/" id="createUserForm">
+			User Name <input type="text" name="username"> </input> Password <input
+				type="text" name="pass"> </input> <input type="submit" />
+		</form>
+
+	</div>
+
+	<script>
+  // Attach a submit handler to the form
+  $("#createUserForm").submit(function( event ) {
+
+    // Stop form from submitting normally
+    event.preventDefault();
+    
+    var sendInfo = {
+            username: document.getElementById("createUserForm").username.value,
+            password: document.getElementById("createUserForm").pass.value
+        };
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/users",
+        contentType: "application/json; charset=utf-8",
+    	data: JSON.stringify(sendInfo),
+        success: function (data, status, jqXHR) {
+        	alert("Success.  User Created");
+        },
+        error: function (jqXHR, status) {
+        	alert("Error - User Not Created");
+        }     
+    });     
+  });
+  </script>
+
+
+</body>
+</html>
